@@ -44,77 +44,93 @@
     <aside id="sidebar">
       <ul>
 
-      <!-- block Sponsors  -------------------------------------------------------------------------------->
+        <!-- block Sponsors  -------------------------------------------------------------------------------->
 
-      <?php 
+          <?php 
       
-        $sponsors = get_field('sponsors_', 'option');
-        $sponsorsList = get_field('sponsors_list', 'option');
-        
-        if ($sponsorsList) : ?>
+          $sponsors = get_field('sponsors_', 'option');
+          $sponsorsList = get_field('sponsors_list', 'option');
+          
+          if ($sponsorsList) : ?>
 
-          <li class="block">
-            <h4 class="heading"><?php echo $sponsors; ?></h4>
-            <div class="ads cf"> 
+            <li class="block">
+              <h4 class="heading"><?php echo $sponsors; ?></h4>
+              <div class="ads cf"> 
 
-              <?php 
-                  $i = 0;
-                  foreach($sponsorsList as $sponsor) : 
-                    
-                    $i++;
-                    $image = $sponsor['sponsor_image'];
-                    $url = $sponsor['sponsor_url']; 
-                    
-                    // if($i % 2 == 0) : $class="last"; else : $class=""; endif; 
-                    $class = ($i % 2 == 0) ? "last" : $class="";
-                ?>
+                <?php 
+                    $i = 0;
+                    foreach($sponsorsList as $sponsor) : 
+                      
+                      $i++;
+                      $image = $sponsor['sponsor_image'];
+                      $url = $sponsor['sponsor_url']; 
+                      
+                      // if($i % 2 == 0) : $class="last"; else : $class=""; endif; 
+                      $class = ($i % 2 == 0) ? "last" : "";
+                  ?>
 
-                <a class="<?php echo $class; ?>" href="<?php echo $url; ?>">
-                  <img src="<?php echo $image['url']; ?>" alt="<?php echo $image['url']; ?>">
-                </a> 
+                  <a class="<?php echo $class; ?>" href="<?php echo $url; ?>">
+                    <img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>">
+                  </a> 
 
-              <?php endforeach; ?>
-            </div>
+                <?php endforeach; ?>
+              </div>
 
-          </li>
+            </li>
 
-      <?php endif; ?>
-
-        <!-- block Widgets ---------------------------------------------------------------------->
-        <?php 
-        
-        $textWidgetTitle = get_field('text_widget', 'option');
-        $textWidgetContent = get_field('text_widget_content', 'option');
-
-        if ($textWidgetContent) :
-        
-        ?>
-
-        <li class="block">
-
-          <?php if ($textWidgetTitle) : ?>
-              <h4 class="heading"><?php echo $textWidgetTitle; ?></h4>
           <?php endif; ?>
 
-          <?php echo $textWidgetContent; ?>
+          <!-- block Widgets ---------------------------------------------------------------------->
+          <?php 
+        
+          $textWidgetTitle = get_field('text_widget', 'option');
+          $textWidgetContent = get_field('text_widget_content', 'option');
+
+          if ($textWidgetContent) :
+        
+          ?>
+
+          <li class="block">
+
+            <?php if ($textWidgetTitle) : ?>
+                <h4 class="heading"><?php echo $textWidgetTitle; ?></h4>
+            <?php endif; ?>
+
+            <?php echo $textWidgetContent; ?>
+            
+          </li>
+
+          <?php endif; ?>
+
+          <!-- block Categories -->
+          <?php 
           
-        </li>
+          $args = array(
+            'taxonomy' => 'category',
+            'hide_empty' => false,
+            'exclude' => array('1')
+          );
 
-        <?php endif; ?>
+          $terms = get_categories($args);
 
-        <!-- block Categories -->
-          <h4 class="heading">Categories</h4>
-          <ul>
-            <li class="cat-item"><a href="#">Film and video<span class="post-counter"> (2)</span></a></li>
-            <li class="cat-item"><a href="#">Print<span class="post-counter"> (2)</span></a></li>
-            <li class="cat-item"><a href="#">Photo and lomo<span class="post-counter"> (2)</span></a></li>
-            <li class="cat-item"><a href="#">Habitant morbi<span class="post-counter"> (2)</span></a></li>
-            <li class="cat-item"><a href="#">Film and video<span class="post-counter"> (2)</span></a></li>
-            <li class="cat-item"><a href="#">Print<span class="post-counter"> (2)</span></a></li>
-            <li class="cat-item"><a href="#">Photo and lomo<span class="post-counter"> (2)</span></a></li>
-            <li class="cat-item"><a href="#">Habitant morbi<span class="post-counter"> (2)</span></a></li>
-          </ul>
-        </li>
+          if ($terms) : ?>
+          
+            <h4 class="heading">Categories</h4>
+            <ul>
+              <?php foreach($terms as $term) : 
+                $termid = $term->$term_id; ?>
+                
+                <li class="cat-item">
+                  <a href="<?php echo get_term_link($term); ?>">
+                    <?php echo $term->name; ?>
+                    <span class="post-counter"> (<?php echo $term->count; ?>)</span>
+                  </a>
+                </li>
+
+              <?php endforeach; ?>
+            </ul>
+          <?php endif; ?>
+
       </ul>
     </aside>
     <!-- ENDS sidebar -->

@@ -5,11 +5,35 @@
 <div role="main" id="main">
   <div class="wrapper">
     <!-- SLIDER -->
-    <div class="slider-wrapper theme-default theme-project theme-home">
-      <div class="ribbon"></div>
-      <div id="slider" class="nivoSlider"> <img src="<?php echo get_template_directory_uri ();?>/img/dummies/slides/01.jpg" alt=""> <a href="#"><img src="<?php echo get_template_directory_uri ();?>/img/dummies/slides/02.jpg" alt=""></a> <img src="<?php echo get_template_directory_uri ();?>/img/dummies/slides/03.jpg" alt=""> </div>
-    </div>
-    <!-- ENDS SLIDER -->
+    <?php if (have_rows('slider')) : ?>
+
+        <div class="slider-wrapper theme-default theme-project theme-home">
+          <div class="ribbon"></div>
+          <div id="slider" class="nivoSlider">
+
+            <?php while(have_rows('slider')) : the_row(); 
+
+              $img = get_sub_field('image');
+              $link = get_sub_field('link');
+              $target = $link['target'] ? $link['target'] : "_self"; 
+
+              if ($img) :
+
+                ?>
+                    <a href="<?php echo $link['url']; ?>" target="<?php echo $target; ?>">
+                      <img src="<?php echo  $img['url']; ?>" alt="<?php echo  $img['alt']; ?>">
+                    </a>
+                    
+              <?php endif; ?>
+
+            <?php endwhile; ?>
+            
+          </div>
+        </div>
+
+    <?php endif; ?>
+      <!-- ENDS SLIDER -->
+
     <!-- headline -->
     <div class="headline"> I'm a Retro style HTML template and completely FREE! </div>
     <!-- ENDS headline -->

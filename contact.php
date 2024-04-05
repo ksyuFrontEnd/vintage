@@ -12,27 +12,20 @@ get_header(); ?>
 <div role="main" id="main">
   <div class="wrapper">
    <!-- page-content -->
+
+   <?php 
+    $content = get_field('content'); 
+   ?>
+
     <div class="page-content">
-
-      <!-- GOOGLE MAPS -->
-      <script src="https://maps.google.com/maps/api/js?sensor=true"></script>
-      <script>
-      function initialize() {
-          var latlng = new google.maps.LatLng(-34.397, 150.644);
-          var myOptions = {
-              zoom: 8,
-              center: latlng,
-              mapTypeId: google.maps.MapTypeId.ROADMAP
-          };
-          var map = new google.maps.Map(document.getElementById("map_canvas"),
-          myOptions);
-      }
-      </script>
-
-      <h2 class="heading">Location</h2>
+      <h2 class="heading"><?php the_title(); ?></h2>
       <div id="map_canvas"></div>
-      <p> Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet.</p>
+
+      <?php if ($content) : ?>
+        <?php echo $content; ?>
+      <?php endif; ?>
       <!-- ENDS GOOGLE MAPS -->
+      
       <h2 class="heading">Contact Form</h2>
       <!-- form -->
       <form id="contactForm" action="#" method="post">
@@ -66,6 +59,23 @@ get_header(); ?>
       <div class="c-4"></div>
     </div>
     <!-- ENDS page-content -->
+
+    <!-- GOOGLE MAPS -->
+    <script src="https://maps.google.com/maps/api/js?sensor=true"></script>
+      <script>
+      function initialize() {
+          var latlng = new google.maps.LatLng(-34.397, 150.644);
+          var myOptions = {
+              zoom: 8,
+              center: latlng,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+          var map = new google.maps.Map(document.getElementById("map_canvas"),
+          myOptions);
+      }
+
+      initialize();
+      </script>
   </div>
 </div>
 <!-- ENDS MAIN -->
